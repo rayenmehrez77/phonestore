@@ -3,12 +3,12 @@ session_start();
 
 require("../config/commandes.php");
 
-if(!isset($_SESSION['xRttpHo0greL39']))
+if(!isset($_SESSION['admin']))
 {
     header("Location: ../login.php");
 }
 
-if(empty($_SESSION['xRttpHo0greL39']))
+if(empty($_SESSION['admin']))
 {
     header("Location: ../login.php");
 }
@@ -30,9 +30,42 @@ if(isset($_GET['id'])){
     }
 }
 
-foreach($_SESSION['xRttpHo0greL39'] as $i){
+foreach($_SESSION['admin'] as $i){
     $nom = $i->pseudo;
     $email = $i->email;
+}
+
+if(isset($_POST['valider']))
+{
+    if(isset($_POST['image']) AND isset($_POST['nom']) AND isset($_POST['prix']) AND isset($_POST['desc']))
+    {
+    if(!empty($_POST['image']) AND !empty($_POST['nom']) AND !empty($_POST['prix']) AND !empty($_POST['desc']))
+        {
+            $image = htmlspecialchars(strip_tags($_POST['image']));
+            $nom = htmlspecialchars(strip_tags($_POST['nom']));
+            $prix = htmlspecialchars(strip_tags($_POST['prix']));
+            $desc = htmlspecialchars(strip_tags($_POST['desc']));
+        
+            if(isset($_GET['id'])){
+
+                if(!empty($_GET['id']) OR is_numeric($_GET['id']))
+                {
+                    $id = $_GET['id'];
+                }
+            }
+
+        try 
+        {
+            $edit = new Produit($id, $nom, $prix, $desc, $image);
+            $edit->modifier(); 
+            header('Location: afficher.php');
+        } 
+        catch (Exception $e) 
+        {
+            $e->getMessage();
+        }
+        }
+    }
 }
 
 ?>
@@ -49,7 +82,7 @@ foreach($_SESSION['xRttpHo0greL39'] as $i){
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-    <a class="navbar-brand" href="../">MonoShop</a>
+    <a class="navbar-brand" href="../">Phone Store</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -66,25 +99,26 @@ foreach($_SESSION['xRttpHo0greL39'] as $i){
             </li>
 
             <li class="nav-item">
-            <a class="nav-link active" style="font-weight: bold; color: green" href="" >Modification</a>
+            <a class="nav-link active" style="font-weight: bold; color: green" href="editer.php" >Modification</a>
             </li>
+            
             
         </ul>
         <div style="margin-right: 500px">
-        <h5 style="color: #545659; opacity: 0.5;">Connecté en tant que: <?= $nom ?></h5>
         </div>
         <a class="btn btn-danger d-flex" style="display: flex; justify-content: flex-end;" href="destroy.php">Se deconnecter</a>
         </div>
     </div>
     </nav>
 
-    <div class="album py-5 bg-light">
+    <div class="album py-3 bg-light">
         <div class="container">
-
+            <h5 style="color: #545659; opacity: 0.5; margin-bottom: 20px">Connecté en tant que: <?= $nom ?></h5>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-<?php foreach ($leProduit as $produit): ?>
+    <?php foreach ($leProduit as $produit): ?>
         
+
     <form method="post">
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">L'image du produit</label>
@@ -116,40 +150,3 @@ foreach($_SESSION['xRttpHo0greL39'] as $i){
     
 </body>
 </html>
-
-<?php
-
-    if(isset($_POST['valider']))
-    {
-        if(isset($_POST['image']) AND isset($_POST['nom']) AND isset($_POST['prix']) AND isset($_POST['desc']))
-        {
-        if(!empty($_POST['image']) AND !empty($_POST['nom']) AND !empty($_POST['prix']) AND !empty($_POST['desc']))
-            {
-                $image = htmlspecialchars(strip_tags($_POST['image']));
-                $nom = htmlspecialchars(strip_tags($_POST['nom']));
-                $prix = htmlspecialchars(strip_tags($_POST['prix']));
-                $desc = htmlspecialchars(strip_tags($_POST['desc']));
-            
-                if(isset($_GET['id'])){
-    
-                    if(!empty($_GET['id']) OR is_numeric($_GET['id']))
-                    {
-                        $id = $_GET['id'];
-                    }
-                }
-
-            try 
-            {
-                modifier($image, $nom, $prix, $desc, $id);
-                header('Location: afficher.php');
-            } 
-            catch (Exception $e) 
-            {
-                $e->getMessage();
-            }
-
-            }
-        }
-    }
-
-?>

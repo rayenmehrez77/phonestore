@@ -28,7 +28,6 @@ if(isset($_POST['upload'])){
 	echo "File Name<b>::</b> ".$image['name'];
 
 	move_uploaded_file($image['tmp_name'],"img/".$image['name']);
-
     
 }
 

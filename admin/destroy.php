@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if (isset($_SESSION['xRttpHo0greL39'])){
+if (isset($_SESSION['admin'])){
 
-    $_SESSION['xRttpHo0greL39'] = array();
+    $_SESSION['admin'] = array();
 
     session_destroy();
 

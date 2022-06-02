@@ -1,61 +1,62 @@
 <?php
 
-function ajouterUser($nom, $prenom, $email, $motdepasse)
-{
-  if(require("connexion.php"))
+class Produit {
+  public $id; 
+  public $nom; 
+  public $prix; 
+  public $desc; 
+  public $image; 
+
+  function __construct($id, $nom, $prix, $desc, $image)
   {
-    $req = $access->prepare("INSERT INTO utilisateurs (nom, prenom, email, motdepasse) VALUES (?, ?, ?, ?)");
+    $this->id = $id; 
+    $this->nom = $nom; 
+    $this->prix = $prix; 
+    $this->desc = $desc; 
+    $this->image = $image; 
+  }
 
-    $req->execute(array($nom, $prenom, $email, $motdepasse));
+  function modifier()
+  {
+    if(require("connexion.php"))
+    {
+      $req = $access->prepare("UPDATE produits SET `image` = ?, nom = ?, prix = ?, description = ? WHERE id=?");
 
-    return true;
+      $req->execute(array($image, $nom, $prix, $desc, $id));
 
-    $req->closeCursor();
+      $req->closeCursor();
+    }
   }
 }
 
-// function getUsers($email, $password){
-  
-//   if(require("connexion.php")){
 
-//     $req = $access->prepare("SELECT * FROM utilisateur ");
 
-//     $req->execute();
 
-//     if($req->rowCount() == 1){
-      
-//       $data = $req->fetchAll(PDO::FETCH_OBJ);
+// function ajouterUser($nom, $prenom, $email, $motdepasse)
+// {
+//   if(require("connexion.php"))
+//   {
+//     $req = $access->prepare("INSERT INTO utilisateurs (nom, prenom, email, motdepasse) VALUES (?, ?, ?, ?)");
 
-//       foreach($data as $i){
-//         $mail = $i->email;
-//         $mdp = $i->motdepasse;
-//       }
+//     $req->execute(array($nom, $prenom, $email, $motdepasse));
 
-//       if($mail == $email AND $mdp == $password)
-//       {
-//         return $data;
-//       }
-//       else{
-//           return false;
-//       }
+//     return true;
 
-//     }
-
+//     $req->closeCursor();
 //   }
-
 // }
 
-function modifier($image, $nom, $prix, $desc, $id)
-{
-  if(require("connexion.php"))
-  {
-    $req = $access->prepare("UPDATE produits SET `image` = ?, nom = ?, prix = ?, description = ? WHERE id=?");
+// function modifier($image, $nom, $prix, $desc, $id)
+// {
+//   if(require("connexion.php"))
+//   {
+//     $req = $access->prepare("UPDATE produits SET `image` = ?, nom = ?, prix = ?, description = ? WHERE id=?");
 
-    $req->execute(array($image, $nom, $prix, $desc, $id));
+//     $req->execute(array($image, $nom, $prix, $desc, $id));
 
-    $req->closeCursor();
-  }
-}
+//     $req->closeCursor();
+//   }
+// }
 
 function afficherUnProduit($id)
 {
@@ -117,7 +118,7 @@ function getAdmin($email, $password){
   
   if(require("connexion.php")){
 
-    $req = $access->prepare("SELECT * FROM admin WHERE id=33");
+    $req = $access->prepare("SELECT * FROM administrateur WHERE id=1");
 
     $req->execute();
 
@@ -125,11 +126,10 @@ function getAdmin($email, $password){
       
       $data = $req->fetchAll(PDO::FETCH_OBJ);
 
-      foreach($data as $i){
-        $mail = $i->email;
-        $mdp = $i->motdepasse;
+      foreach($data as $el){
+        $mail = $el->email;
+        $mdp = $el->motdepasse;
       }
-
       if($mail == $email AND $mdp == $password)
       {
         return $data;
@@ -141,7 +141,6 @@ function getAdmin($email, $password){
     }
 
   }
-
 }
 
 ?>

@@ -1,25 +1,25 @@
 <?php
 session_start();
 
-require("../config/commandes.php");
+  require("../config/commandes.php");
 
-if(!isset($_SESSION['xRttpHo0greL39']))
-{
-    header("Location: ../login.php");
-}
+  if(!isset($_SESSION['admin']))
+  {
+      header("Location: ../login.php");
+  }
 
-if(empty($_SESSION['xRttpHo0greL39']))
-{
-    header("Location: ../login.php");
-}
+  if(empty($_SESSION['admin']))
+  {
+      header("Location: ../login.php");
+  }
 
-$Produits=afficher();
+  $Produits=afficher();
 
-foreach($_SESSION['xRttpHo0greL39'] as $i){
-  $nom = $i->pseudo;
-  $email = $i->email;
-}
-?>
+  foreach($_SESSION['admin'] as $i){
+    $nom = $i->pseudo;
+    $email = $i->email;
+  }
+  ?>
 
 <!DOCTYPE html>
 <html>
@@ -32,9 +32,10 @@ foreach($_SESSION['xRttpHo0greL39'] as $i){
 </head>
 <body>
 
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-  <a class="navbar-brand" href="#">Administration</a>
+  <a class="navbar-brand" href="../">Phone Store</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -47,37 +48,34 @@ foreach($_SESSION['xRttpHo0greL39'] as $i){
           <a class="nav-link" aria-current="page" href="../admin/">Nouveau</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" style="font-weight: bold;" href="supprimer.php">Suppression</a>
+          <a class="nav-link active" style="font-weight: bold; color: green" href="supprimer.php">Suppression</a>
         </li>
-
-      </ul>
-
-      <div style="margin-right: 500px">
-        <h5 style="color: #545659; opacity: 0.5;">Connecté en tant que: <?= $nom ?></h5>
-      </div>
-
+        <li class="nav-item">
+          <a class="nav-link"  href="editer.php">Modification</a>
+        </li>
+      </ul>      
       <a class="btn btn-danger d-flex" style="display: flex; justify-content: flex-end;" href="destroy.php">Se deconnecter</a>
-
     </div>
   </div>
 </nav>
 
   <div class="album py-5 bg-light">
+   <h5 style="color: #545659; opacity: 0.5; margin-left: 70px">Connecté en tant que: <?= $nom ?></h5>
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       	
-<form method="post">
-  <div class="mb-3">
+      <form method="post">
+        <div class="mb-3">
 
-   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Identifiant du produit</label>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Identifiant du produit</label>
 
-    <input type="number" class="form-control" name="idproduit" required>
-  </div>
+          <input type="number" class="form-control" name="idproduit" required>
+        </div>
 
-  <button type="submit" name="valider" class="btn btn-primary">Supprimer le produit</button>
-</form>
+        <button type="submit" name="valider" class="btn btn-primary">Supprimer le produit</button>
+      </form>
 
       </div>
 
@@ -100,9 +98,6 @@ foreach($_SESSION['xRttpHo0greL39'] as $i){
   <?php endforeach; ?>
 
 </div>
-
-    </div></div>
-
     
 </body>
 </html>
@@ -126,8 +121,6 @@ foreach($_SESSION['xRttpHo0greL39'] as $i){
           {
           	$e->getMessage();
           }
-	    	
-
 
 	    }
     }

@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['xRttpHo0greL39']))
+if(!isset($_SESSION['admin']))
 {
     header("Location: ../login.php");
 }
 
-if(empty($_SESSION['xRttpHo0greL39']))
+if(empty($_SESSION['admin']))
 {
     header("Location: ../login.php");
 }
@@ -15,7 +15,7 @@ require("../config/commandes.php");
 
 $produits = afficher();
 
-foreach($_SESSION['xRttpHo0greL39'] as $i){
+foreach($_SESSION['admin'] as $i){
     $nom = $i->pseudo;
     $email = $i->email;
 } 
@@ -34,31 +34,33 @@ foreach($_SESSION['xRttpHo0greL39'] as $i){
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-<div class="container-fluid">
-<a class="navbar-brand" href="../">MonoShop</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    <li class="nav-item">
-        <a class="nav-link active" style="font-weight: bold;" aria-current="page" href="../admin/afficher.php">Produits</a>
-        </li>
+    <div class="container-fluid">
+    <a class="navbar-brand" href="../">Phone Store</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="../admin/">Nouveau</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link" href="supprimer.php">Suppression</a>
-        </li>
-        
-    </ul>
-    <div style="margin-right: 500px">
-        <h5 style="color: #545659; opacity: 0.5;">Connecté en tant que: <?= $nom ?></h5>
+            <a class="nav-link active" style="font-weight: bold; color: green" aria-current="page" href="../admin/afficher.php">Produits</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="../admin/">Nouveau</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="supprimer.php">Suppression</a>
+            </li>
+            <li class="nav-item">
+          <a class="nav-link"  href="editer.php">Modification</a>
+                </li>
+
+        </ul>
+        <div style="margin-right: 500px">
+        </div>
+        <a class="btn btn-danger d-flex" style="display: flex; justify-content: flex-end;" href="destroy.php">Se deconnecter</a>
+        </div>
     </div>
-    <a class="btn btn-danger d-flex" style="display: flex; justify-content: flex-end;" href="destroy.php">Se deconnecter</a>
-    </div>
-</div>
-</nav>
+    </nav>
 
 <div class="album py-5 bg-light">
     <div class="container">
