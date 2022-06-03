@@ -67,6 +67,7 @@ a:hover {
 .login {
   overflow: hidden;
   position: relative;
+  z-index: 99;
 }
 
 .opacity {
@@ -83,4 +84,23 @@ a:hover {
 .imagg {
   width: 100%;
   height: 80px;
+}
+
+.navbarr {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 30px;
+  padding: 10px 0;
+}
+
+.leftt {
+  display: flex;
+  align-items: center;
+}
+.leftt ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin-top: 25px;
 }
